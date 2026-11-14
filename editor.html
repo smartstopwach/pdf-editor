@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Editor — Free, No Sign-Up</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231d6fff'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>PDF</text></svg>">
+<link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+
+<header class="ed-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">PDF</span>
+    <span class="brand-text">Free&nbsp;PDF&nbsp;Editor</span>
+  </a>
+  <div class="ed-fileinfo">
+    <span id="file-name" class="file-name">No file loaded</span>
+    <span class="free-pill">100% free · no sign-up</span>
+  </div>
+  <div class="ed-header-actions">
+    <button class="btn" id="btn-reupload" title="Open a different document">Open file…</button>
+    <button class="btn btn-primary" id="btn-download" disabled>Download PDF</button>
+  </div>
+</header>
+
+<div class="ed-body">
+  <!-- toolbar -->
+  <aside class="ed-toolbar">
+    <div class="tool-group" id="tool-group">
+      <button class="tool" data-tool="select" title="Select / move (V)">
+        <svg viewBox="0 0 24 24"><path d="M5 3l14 7-6 2-2 6-6-15z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>Select</span>
+      </button>
+      <button class="tool" data-tool="text" title="Add text (T)">
+        <svg viewBox="0 0 24 24"><path d="M5 5h14M12 5v14M9 19h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Text</span>
+      </button>
+      <button class="tool" data-tool="replace" title="Find &amp; replace existing text">
+        <svg viewBox="0 0 24 24"><path d="M4 6h11M11 3v3M20 18H9M13 15v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Find &amp; Replace</span>
+      </button>
+      <button class="tool" data-tool="draw" title="Freehand draw (D)">
+        <svg viewBox="0 0 24 24"><path d="M4 20c4-1 6-6 9-9s5-3 7-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="16.5" cy="8" r="1.6" fill="currentColor"/></svg>
+        <span>Draw</span>
+      </button>
+      <button class="tool" data-tool="highlight" title="Highlighter (H)">
+        <svg viewBox="0 0 24 24"><path d="M4 14h12l5-5v1h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Highlight</span>
+      </button>
+    </div>
+    <div class="tool-group">
+      <button class="tool" data-tool="rect" title="Rectangle (R)">
+        <svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Rect</span>
+      </button>
+      <button class="tool" data-tool="ellipse" title="Ellipse (O)">
+        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Ellipse</span>
+      </button>
+      <button class="tool" data-tool="line" title="Line (L)">
+        <svg viewBox="0 0 24 24"><path d="M4 20L20 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Line</span>
+      </button>
+      <button class="tool" data-tool="arrow" title="Arrow (A)">
+        <svg viewBox="0 0 24 24"><path d="M4 20L20 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>Arrow</span>
+      </button>
+      <button class="tool" data-tool="note" title="Sticky note (N)">
+        <svg viewBox="0 0 24 24"><path d="M5 4h14v10l-5 5H5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 19h4v-5l-4 5z" fill="currentColor" opacity="0.4"/></svg>
+        <span>Note</span>
+      </button>
+    </div>
+    <div class="tool-group">
+      <button class="tool" data-tool="image" title="Insert image (I)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10" r="1.5" fill="currentColor"/><path d="M4 17l5-5 4 4 3-3 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>Image</span>
+      </button>
+      <button class="tool" data-tool="signature" title="Add signature (S)">
+        <svg viewBox="0 0 24 24"><path d="M3 17c3-8 5-4 8 0s5 2 6 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Signature</span>
+      </button>
+      <button class="tool" data-tool="pages" title="Page manager">
+        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="8" y="6" width="13" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" opacity="0.55"/></svg>
+        <span>Pages</span>
+      </button>
+      <button class="tool danger" data-tool="delete" title="Delete selected (Del)">
+        <svg viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M8 7l1 13h6l1-13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Delete</span>
+      </button>
+    </div>
+    <input type="file" id="file-input" accept=".pdf" hidden>
+  </aside>
+
+  <!-- canvas area -->
+  <main class="ed-canvas-area" id="ed-canvas-area">
+    <div class="ed-empty" id="ed-empty">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 32V10m0 0l-7 7m7-7l7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 30v6a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4v-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <h2>Drop a PDF to start editing</h2>
+      <p>Everything runs in your browser — your file is never uploaded anywhere.</p>
+      <button class="btn btn-primary btn-lg" id="btn-empty-upload">Select PDF from device</button>
+    </div>
+    <div class="ed-pages" id="ed-pages"></div>
+
+    <div class="ed-statusbar">
+      <span id="zoom-label">100%</span>
+      <div class="zoom-controls">
+        <button id="zoom-out" title="Zoom out">−</button>
+        <button id="zoom-fit" title="Fit width">Fit</button>
+        <button id="zoom-in" title="Zoom in">+</button>
+      </div>
+      <span class="status-msg" id="status-msg"></span>
+    </div>
+  </main>
+
+  <!-- right panel -->
+  <aside class="ed-panel">
+    <section class="panel-section">
+      <h3>Properties</h3>
+      <div class="prop-row">
+        <label for="prop-color">Color</label>
+        <input type="color" id="prop-color" value="#1d6fff">
+      </div>
+      <div class="prop-row" data-show="stroke">
+        <label for="prop-width">Width</label>
+        <input type="range" id="prop-width" min="1" max="20" value="3">
+        <span id="prop-width-val">3 pt</span>
+      </div>
+      <div class="prop-row" data-show="fill">
+        <label for="prop-opacity">Opacity</label>
+        <input type="range" id="prop-opacity" min="10" max="100" value="40">
+        <span id="prop-opacity-val">40%</span>
+      </div>
+      <div class="prop-row" data-show="text">
+        <label for="prop-font">Font</label>
+        <select id="prop-font">
+          <option value="Helvetica">Helvetica</option>
+          <option value="Helvetica-Bold">Helvetica Bold</option>
+          <option value="Times-Roman">Times Roman</option>
+          <option value="Courier">Courier</option>
+        </select>
+      </div>
+      <div class="prop-row" data-show="text">
+        <label for="prop-size">Size</label>
+        <input type="range" id="prop-size" min="6" max="72" value="14">
+        <span id="prop-size-val">14 pt</span>
+      </div>
+      <p class="panel-hint" id="panel-hint">Choose a tool to edit your document.</p>
+    </section>
+
+    <section class="panel-section">
+      <h3>Find &amp; Replace</h3>
+      <label class="prop-label" for="find-text">Find</label>
+      <input type="text" id="find-text" placeholder="Text to search…">
+      <label class="prop-label" for="replace-text">Replace with</label>
+      <input type="text" id="replace-text" placeholder="New text (can be empty)">
+      <div class="btn-row">
+        <button class="btn btn-sm" id="btn-find">Find</button>
+        <button class="btn btn-sm btn-primary" id="btn-replace">Replace</button>
+        <button class="btn btn-sm" id="btn-replace-all">Replace all</button>
+      </div>
+      <p class="panel-hint" id="find-status"></p>
+    </section>
+
+    <section class="panel-section panel-grow">
+      <h3>Pages</h3>
+      <div class="page-list" id="page-list"></div>
+    </section>
+  </aside>
+</div>
+
+<!-- text edit popover -->
+<div class="text-popover hidden" id="text-popover">
+  <textarea id="text-popover-input" rows="2"></textarea>
+  <div class="text-popover-actions">
+    <button class="btn btn-sm" id="text-popover-cancel">Cancel</button>
+    <button class="btn btn-sm btn-primary" id="text-popover-ok">Apply</button>
+  </div>
+</div>
+
+<!-- signature modal -->
+<div class="modal-backdrop hidden" id="sig-modal">
+  <div class="modal">
+    <h3>Add your signature</h3>
+    <div class="sig-tabs">
+      <button class="sig-tab active" data-mode="draw">Draw</button>
+      <button class="sig-tab" data-mode="type">Type</button>
+      <button class="sig-tab" data-mode="upload">Upload</button>
+    </div>
+
+    <div class="sig-pane" data-pane="draw">
+      <canvas id="sig-canvas" width="520" height="200"></canvas>
+      <div class="btn-row">
+        <button class="btn btn-sm" id="sig-clear">Clear</button>
+      </div>
+    </div>
+
+    <div class="sig-pane hidden" data-pane="type">
+      <input type="text" id="sig-type-input" placeholder="Type your name" style="font-size:22px;width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;">
+      <div class="prop-row" style="margin-top:12px">
+        <label for="sig-font-size">Size</label>
+        <input type="range" id="sig-font-size" min="16" max="60" value="32">
+      </div>
+    </div>
+
+    <div class="sig-pane hidden" data-pane="upload">
+      <input type="file" id="sig-upload-input" accept="image/png,image/jpeg,image/jpg" class="full-width">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" id="sig-cancel">Cancel</button>
+      <button class="btn btn-primary" id="sig-ok">Insert signature</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script src="lib/pdfjs/pdf.min.js"></script>
+<script src="lib/pdf-lib/pdf-lib.min.js"></script>
+<script src="js/files.js"></script>
+<script src="js/editor.js"></script>
+</body>
+</html>
