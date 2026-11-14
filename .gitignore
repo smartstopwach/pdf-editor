@@ -1,0 +1,10 @@
+# dependencies / test artifacts
+.venv-test/
+node_modules/
+
+# generated files
+*.tgz
+*.log
+
+# OS / editor noise
+.DS_Store
